@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Bem vindo ao cadastro/consulta de chamado técnico. Escolha uma opção: </h2>
+<br>
+<ul>
+    <li>@Html.ActionLink("Gestão de Clientes", "Cadastro", "Cliente")</li>
+    <li>@Html.ActionLink("Gestão de Atendentes", "Listar", "Atendente")</li>
+    <li>@Html.ActionLink("Cadastro de Chamado", "Cadastro", "Chamado")</li>
+    <li>@Html.ActionLink("Atendimento de Chamado", "ListarConvidados", "Chamado")</li>
+    <li>@Html.ActionLink("Lista de Chamados", "ListarConvidados", "Chamado")</li>
+</ul>
+

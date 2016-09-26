@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ChamadoTecnicoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Atendente">
+          <Key>
+            <PropertyRef Name="IdAtendente" />
+          </Key>
+          <Property Name="IdAtendente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeAtendente" Type="varchar" MaxLength="100" />
+          <Property Name="TelefoneAtenente" Type="varchar" MaxLength="50" />
+          <Property Name="EmailAtendente" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Chamado">
+          <Key>
+            <PropertyRef Name="IdChamado" />
+          </Key>
+          <Property Name="IdChamado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdAtendente" Type="int" Nullable="false" />
+          <Property Name="TituloChamado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DescricaoChamado" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EstadoChamado" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeCliente" Type="varchar" MaxLength="100" />
+          <Property Name="TelefoneCliente" Type="varchar" MaxLength="50" />
+          <Property Name="EmailCliente" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Chamado_Atendente">
+          <End Role="Atendente" Type="Self.Atendente" Multiplicity="1" />
+          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atendente">
+              <PropertyRef Name="IdAtendente" />
+            </Principal>
+            <Dependent Role="Chamado">
+              <PropertyRef Name="IdAtendente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chamado_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Chamado">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChamadoTecnicoModelStoreContainer">
+          <EntitySet Name="Atendente" EntityType="Self.Atendente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chamado" EntityType="Self.Chamado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chamado_Atendente" Association="Self.FK_Chamado_Atendente">
+            <End Role="Atendente" EntitySet="Atendente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chamado_Cliente" Association="Self.FK_Chamado_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChamadoTecnicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Atendente">
+          <Key>
+            <PropertyRef Name="IdAtendente" />
+          </Key>
+          <Property Name="IdAtendente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeAtendente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TelefoneAtenente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAtendente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Chamado" Relationship="Self.FK_Chamado_Atendente" FromRole="Atendente" ToRole="Chamado" />
+        </EntityType>
+        <EntityType Name="Chamado">
+          <Key>
+            <PropertyRef Name="IdChamado" />
+          </Key>
+          <Property Name="IdChamado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdAtendente" Type="Int32" Nullable="false" />
+          <Property Name="TituloChamado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DescricaoChamado" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstadoChamado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Atendente" Relationship="Self.FK_Chamado_Atendente" FromRole="Chamado" ToRole="Atendente" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Chamado_Cliente" FromRole="Chamado" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TelefoneCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Chamado" Relationship="Self.FK_Chamado_Cliente" FromRole="Cliente" ToRole="Chamado" />
+        </EntityType>
+        <Association Name="FK_Chamado_Atendente">
+          <End Role="Atendente" Type="Self.Atendente" Multiplicity="1" />
+          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atendente">
+              <PropertyRef Name="IdAtendente" />
+            </Principal>
+            <Dependent Role="Chamado">
+              <PropertyRef Name="IdAtendente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chamado_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Chamado">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChamadoTecnicoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Atendente" EntityType="Self.Atendente" />
+          <EntitySet Name="Chamado" EntityType="Self.Chamado" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <AssociationSet Name="FK_Chamado_Atendente" Association="Self.FK_Chamado_Atendente">
+            <End Role="Atendente" EntitySet="Atendente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chamado_Cliente" Association="Self.FK_Chamado_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChamadoTecnicoModelStoreContainer" CdmEntityContainer="ChamadoTecnicoEntities">
+          <EntitySetMapping Name="Atendente">
+            <EntityTypeMapping TypeName="ChamadoTecnicoModel.Atendente">
+              <MappingFragment StoreEntitySet="Atendente">
+                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
+                <ScalarProperty Name="NomeAtendente" ColumnName="NomeAtendente" />
+                <ScalarProperty Name="TelefoneAtenente" ColumnName="TelefoneAtenente" />
+                <ScalarProperty Name="EmailAtendente" ColumnName="EmailAtendente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chamado">
+            <EntityTypeMapping TypeName="ChamadoTecnicoModel.Chamado">
+              <MappingFragment StoreEntitySet="Chamado">
+                <ScalarProperty Name="IdChamado" ColumnName="IdChamado" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
+                <ScalarProperty Name="TituloChamado" ColumnName="TituloChamado" />
+                <ScalarProperty Name="DescricaoChamado" ColumnName="DescricaoChamado" />
+                <ScalarProperty Name="EstadoChamado" ColumnName="EstadoChamado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="ChamadoTecnicoModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="NomeCliente" ColumnName="NomeCliente" />
+                <ScalarProperty Name="TelefoneCliente" ColumnName="TelefoneCliente" />
+                <ScalarProperty Name="EmailCliente" ColumnName="EmailCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
