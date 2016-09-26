@@ -24,5 +24,22 @@ namespace SistemaChamadoTecnico.DAL
                 return ent.Cliente.ToList<Cliente>();
             }
         }
+
+        public static void CreateAtendente(Atendente atendente)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Atendente.Add(atendente);
+                ent.SaveChanges();
+            }
+        }
+
+        public static List<Atendente> ListAtendente()
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                return ent.Atendente.ToList<Atendente>();
+            }
+        }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SistemaChamadoTecnico.Models.Atendente>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lista</h2>
+
+<p>
+    @Html.ActionLink("Cadastrar Atendente", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeAtendente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefoneAtenente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAtendente)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeAtendente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefoneAtenente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAtendente)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdAtendente }) |
+            @Html.ActionLink("Remover", "Delete", new { id=item.IdAtendente })
+        </td>
+    </tr>
+}
+
+</table>
