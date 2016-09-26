@@ -184,6 +184,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Atendente\Create.cshtml" />
     <Content Include="Views\Atendente\List.cshtml" />
+    <Content Include="Views\Cliente\Edit.cshtml" />
+    <Content Include="Views\Cliente\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

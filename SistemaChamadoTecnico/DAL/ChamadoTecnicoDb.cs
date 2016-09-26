@@ -41,5 +41,31 @@ namespace SistemaChamadoTecnico.DAL
                 return ent.Atendente.ToList<Atendente>();
             }
         }
+
+        public static object SearchCliente(int id)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                return ent.Cliente.FirstOrDefault(x => x.IdCliente == id);
+            }
+        }
+
+        public static void AlterCliente(Cliente cliente)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Entry<Cliente>(cliente).State = System.Data.Entity.EntityState.Modified;
+                ent.SaveChanges();
+            }
+        }
+
+        public static void DeleteCliente(Cliente cliente)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Entry<Cliente>(cliente).State = System.Data.Entity.EntityState.Deleted;
+                ent.SaveChanges();
+            }
+        }
     }
 }
