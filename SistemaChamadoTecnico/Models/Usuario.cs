@@ -13,5 +13,6 @@ namespace SistemaChamadoTecnico.Models
         public string Senha { get; set; }
         [DataType(DataType.Password)]
         public string Confirma { get; set; }
+        public String Funcao { get; set; }
     }
 }

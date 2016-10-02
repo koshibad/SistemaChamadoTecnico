@@ -15,16 +15,18 @@ namespace SistemaChamadoTecnico.Controllers
         {
             new Estado(1,Estado.eEstado.Aguardando.ToString()),
             new Estado(2,Estado.eEstado.Pendente.ToString()),
-            new Estado(3,Estado.eEstado.Finalizado.ToString()),
+            new Estado(3,Estado.eEstado.Finalizado.ToString())
         };
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Cliente")]
         public ActionResult Create(Chamado chamado)
         {
             if (!ModelState.IsValid)
@@ -37,6 +39,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public ActionResult List(string estado)
         {
             ViewBag.TodosEstados = new SelectList(lstEstados, "NomeEstado", "NomeEstado");
@@ -44,12 +47,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListFor()
-        {
-            return View(ChamadoTecnicoDb.ListChamado(Estado.eEstado.Aguardando.ToString()));
-        }
-
-        [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public ActionResult EditToClose(int? id)
         {
             if (id == null)
@@ -59,6 +57,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Cliente")]
         public ActionResult EditToClose(int? id, Chamado chamado)
         {
             if (ModelState.IsValid)
@@ -74,6 +73,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public ActionResult EditReopen(int? id)
         {
             if (id == null)
@@ -83,6 +83,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Cliente")]
         public ActionResult EditReopen(int? id, Chamado chamado)
         {
             if (ModelState.IsValid)
@@ -96,6 +97,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +107,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Cliente")]
         public ActionResult Delete(int? id, Chamado chamado)
         {
             if (id == null)
@@ -116,6 +119,14 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Atendente")]
+        public ActionResult ListFor()
+        {
+            return View(ChamadoTecnicoDb.ListChamado(Estado.eEstado.Aguardando.ToString()));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Atendente")]
         public ActionResult EditFor(int? id)
         {
             if (id == null)
@@ -125,6 +136,7 @@ namespace SistemaChamadoTecnico.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Atendente")]
         public ActionResult EditFor(int? id, Chamado chamado)
         {
             if (ModelState.IsValid)

@@ -3,15 +3,28 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Bem vindo ao cadastro/consulta de chamado técnico. Escolha uma opção: </h2>
+<h2>Bem vindo ao sistema de chamado técnico. Escolha uma opção: </h2>
 <br>
 <ul>
-    <li>@Html.ActionLink("Cadastro de Clinte", "Create", "Cliente")</li>
-    <li>@Html.ActionLink("Lista de Clientes", "List", "Cliente")</li>
-    <li>@Html.ActionLink("Cadastro de Atendente", "Create", "Atendente")</li>
-    <li>@Html.ActionLink("Lista de Atendentes", "List", "Atendente")</li>
-    <li>@Html.ActionLink("Cadastro de Chamado", "Create", "Chamado")</li>
-    <li>@Html.ActionLink("Atendimento de Chamado", "ListFor", "Chamado")</li>
-    <li>@Html.ActionLink("Lista de Chamados", "List", "Chamado")</li>
-</ul>
+    @if (Request.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <li>@Html.ActionLink("Cadastro de Clinte", "Create", "Cliente")</li>
+            <li>@Html.ActionLink("Lista de Clientes", "List", "Cliente")</li>
+            <li>@Html.ActionLink("Cadastro de Atendente", "Create", "Atendente")</li>
+            <li>@Html.ActionLink("Lista de Atendentes", "List", "Atendente")</li>
+        }
 
+        else if (User.IsInRole("Atendente"))
+        {
+            <li>@Html.ActionLink("Atendimento de Chamado", "ListFor", "Chamado")</li>
+        }
+
+        else if (User.IsInRole("Cliente"))
+        {
+            <li> @Html.ActionLink("Cadastro de Chamado", "Create", "Chamado") </li>
+            <li> @Html.ActionLink("Lista de Chamados", "List", "Chamado") </li>
+        }
+    }
+</ul>

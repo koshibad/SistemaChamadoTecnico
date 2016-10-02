@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SistemaChamadoTecnico.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AtendenteController : Controller
     {
         [HttpGet]

@@ -12,6 +12,13 @@ namespace SistemaChamadoTecnico.Controllers
 {
     public class AutenticacaoController : Controller
     {
+        public static List<Funcao> lstFuncoes = new List<Funcao>()
+        {
+            new Funcao(1,Funcao.eFuncao.Admin.ToString()),
+            new Funcao(2,Funcao.eFuncao.Atendente.ToString()),
+            new Funcao(3,Funcao.eFuncao.Cliente.ToString())
+        };
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -67,6 +74,7 @@ namespace SistemaChamadoTecnico.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.TodasFuncoes = new SelectList(lstFuncoes, "NomeFuncao", "NomeFuncao");
             return View();
         }
 
@@ -80,6 +88,21 @@ namespace SistemaChamadoTecnico.Controllers
             {
                 ViewBag.Erro = "A senha e sua confimação não coincidem !";
                 return View();
+            }
+
+            var roleStore = new RoleStore<IdentityRole>();
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //criando Role
+            var role = roleManager.FindByName(usuario.Funcao);
+            if (role == null)
+            {
+                role = new IdentityRole(usuario.Funcao);
+                var roleresult = roleManager.Create(role);
+                if (!roleresult.Succeeded)
+                {
+                    ViewBag.Erro = roleresult.Errors.FirstOrDefault();
+                    return View();
+                }
             }
 
             var usuarioStore = new UserStore<IdentityUser>();
@@ -97,6 +120,11 @@ namespace SistemaChamadoTecnico.Controllers
             //se o usuário foi criado, o autentica
             if (resultado.Succeeded)
             {
+                //Atribuindo Role ao User
+                var rolesForUser = usuarioManager.GetRoles(usuarioInfo.Id);
+                if (!rolesForUser.Contains(role.Name))
+                    usuarioManager.AddToRole(usuarioInfo.Id, role.Name);
+
                 //Autentica e volta para a página inicial
                 var autManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
                 var identidadeUsuario = usuarioManager.CreateIdentity(usuarioInfo,

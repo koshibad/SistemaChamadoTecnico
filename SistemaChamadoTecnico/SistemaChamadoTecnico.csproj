@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Funcao.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="DAL\ChamadoTecnicoDb.cs" />
     <Compile Include="Global.asax.cs">
