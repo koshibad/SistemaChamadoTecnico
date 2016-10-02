@@ -28,5 +28,6 @@ namespace SistemaChamadoTecnico.Models
         public virtual DbSet<Atendente> Atendente { get; set; }
         public virtual DbSet<Chamado> Chamado { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<PersonUser> PersonUser { get; set; }
     }
 }

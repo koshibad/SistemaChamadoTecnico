@@ -11,8 +11,7 @@ namespace SistemaChamadoTecnico.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
+
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,20 +19,16 @@ namespace SistemaChamadoTecnico.Models
         {
             this.Chamado = new HashSet<Chamado>();
         }
-    
+
         public int IdCliente { get; set; }
-
-        [DisplayName("Nome")]
         public string NomeCliente { get; set; }
-
-        [DisplayName("Telefone")]
         public string TelefoneCliente { get; set; }
-
-        [DisplayName("Email")]
-        [DataType(DataType.EmailAddress)]
         public string EmailCliente { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chamado> Chamado { get; set; }
+        public string SenhaUsuario { get; set; }
+        public string NomeUsuario { get; set; }
+        public string ConfirmaUsuario { get; set; }
     }
 }

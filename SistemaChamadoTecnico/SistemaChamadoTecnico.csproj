@@ -176,17 +176,23 @@
     <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\Funcao.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="DAL\ChamadoTecnicoDb.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\Atendente.cs">
       <DependentUpon>ChamadoTecnico.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chamado.cs">
       <DependentUpon>ChamadoTecnico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cliente.cs">
+      <DependentUpon>ChamadoTecnico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Funcao.cs" />
+    <Compile Include="Models\PersonUser.cs">
+      <DependentUpon>ChamadoTecnico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+    <Compile Include="DAL\ChamadoTecnicoDb.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChamadoTecnico.Context.cs">
       <AutoGen>True</AutoGen>
@@ -202,9 +208,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChamadoTecnico.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Cliente.cs">
-      <DependentUpon>ChamadoTecnico.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estado.cs" />
     <Compile Include="Models\Usuario.cs" />

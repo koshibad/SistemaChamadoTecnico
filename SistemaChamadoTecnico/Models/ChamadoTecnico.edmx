@@ -19,8 +19,8 @@
             <PropertyRef Name="IdChamado" />
           </Key>
           <Property Name="IdChamado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdCliente" Type="int" Nullable="false" />
-          <Property Name="IdAtendente" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" />
+          <Property Name="IdAtendente" Type="int" />
           <Property Name="TituloChamado" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="DescricaoChamado" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="EstadoChamado" Type="varchar" MaxLength="50" Nullable="false" />
@@ -37,8 +37,16 @@
           <Property Name="TelefoneCliente" Type="varchar" MaxLength="50" />
           <Property Name="EmailCliente" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="PersonUser">
+          <Key>
+            <PropertyRef Name="IdPersoUser" />
+          </Key>
+          <Property Name="IdPersoUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPerson" Type="int" />
+          <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <Association Name="FK_Chamado_Atendente">
-          <End Role="Atendente" Type="Self.Atendente" Multiplicity="1" />
+          <End Role="Atendente" Type="Self.Atendente" Multiplicity="0..1" />
           <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Atendente">
@@ -50,7 +58,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Chamado_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
@@ -65,6 +73,7 @@
           <EntitySet Name="Atendente" EntityType="Self.Atendente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Chamado" EntityType="Self.Chamado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonUser" EntityType="Self.PersonUser" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Chamado_Atendente" Association="Self.FK_Chamado_Atendente">
             <End Role="Atendente" EntitySet="Atendente" />
             <End Role="Chamado" EntitySet="Chamado" />
@@ -78,6 +87,20 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ChamadoTecnicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ChamadoTecnicoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Atendente" EntityType="ChamadoTecnicoModel.Atendente" />
+          <EntitySet Name="Chamado" EntityType="ChamadoTecnicoModel.Chamado" />
+          <EntitySet Name="Cliente" EntityType="ChamadoTecnicoModel.Cliente" />
+          <EntitySet Name="PersonUser" EntityType="ChamadoTecnicoModel.PersonUser" />
+          <AssociationSet Name="FK_Chamado_Atendente" Association="ChamadoTecnicoModel.FK_Chamado_Atendente">
+            <End Role="Atendente" EntitySet="Atendente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chamado_Cliente" Association="ChamadoTecnicoModel.FK_Chamado_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Chamado" EntitySet="Chamado" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Atendente">
           <Key>
             <PropertyRef Name="IdAtendente" />
@@ -86,23 +109,23 @@
           <Property Name="NomeAtendente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="TelefoneAtenente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmailAtendente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Chamado" Relationship="Self.FK_Chamado_Atendente" FromRole="Atendente" ToRole="Chamado" />
+          <NavigationProperty Name="Chamado" Relationship="ChamadoTecnicoModel.FK_Chamado_Atendente" FromRole="Atendente" ToRole="Chamado" />
         </EntityType>
         <EntityType Name="Chamado">
           <Key>
             <PropertyRef Name="IdChamado" />
           </Key>
           <Property Name="IdChamado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdCliente" Type="Int32" Nullable="false" />
-          <Property Name="IdAtendente" Type="Int32" Nullable="false" />
-          <Property Name="TituloChamado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DescricaoChamado" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EstadoChamado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Atendente" Relationship="Self.FK_Chamado_Atendente" FromRole="Chamado" ToRole="Atendente" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK_Chamado_Cliente" FromRole="Chamado" ToRole="Cliente" />
+          <Property Name="IdCliente" Type="Int32" />
+          <Property Name="IdAtendente" Type="Int32" />
+          <Property Name="TituloChamado" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DescricaoChamado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoChamado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ObsevacaoChamado" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
           <Property Name="DataCriacaoChamado" Type="DateTime" Precision="0" />
           <Property Name="DataEncerramentoChamado" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Atendente" Relationship="ChamadoTecnicoModel.FK_Chamado_Atendente" FromRole="Chamado" ToRole="Atendente" />
+          <NavigationProperty Name="Cliente" Relationship="ChamadoTecnicoModel.FK_Chamado_Cliente" FromRole="Chamado" ToRole="Cliente" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -112,11 +135,19 @@
           <Property Name="NomeCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="TelefoneCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmailCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Chamado" Relationship="Self.FK_Chamado_Cliente" FromRole="Cliente" ToRole="Chamado" />
+          <NavigationProperty Name="Chamado" Relationship="ChamadoTecnicoModel.FK_Chamado_Cliente" FromRole="Cliente" ToRole="Chamado" />
+        </EntityType>
+        <EntityType Name="PersonUser">
+          <Key>
+            <PropertyRef Name="IdPersoUser" />
+          </Key>
+          <Property Name="IdPersoUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPerson" Type="Int32" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Chamado_Atendente">
-          <End Role="Atendente" Type="Self.Atendente" Multiplicity="1" />
-          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <End Type="ChamadoTecnicoModel.Atendente" Role="Atendente" Multiplicity="0..1" />
+          <End Type="ChamadoTecnicoModel.Chamado" Role="Chamado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Atendente">
               <PropertyRef Name="IdAtendente" />
@@ -127,8 +158,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Chamado_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Chamado" Type="Self.Chamado" Multiplicity="*" />
+          <End Type="ChamadoTecnicoModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="ChamadoTecnicoModel.Chamado" Role="Chamado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="IdCliente" />
@@ -138,20 +169,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ChamadoTecnicoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Atendente" EntityType="Self.Atendente" />
-          <EntitySet Name="Chamado" EntityType="Self.Chamado" />
-          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
-          <AssociationSet Name="FK_Chamado_Atendente" Association="Self.FK_Chamado_Atendente">
-            <End Role="Atendente" EntitySet="Atendente" />
-            <End Role="Chamado" EntitySet="Chamado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Chamado_Cliente" Association="Self.FK_Chamado_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Chamado" EntitySet="Chamado" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -160,10 +178,10 @@
           <EntitySetMapping Name="Atendente">
             <EntityTypeMapping TypeName="ChamadoTecnicoModel.Atendente">
               <MappingFragment StoreEntitySet="Atendente">
-                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
-                <ScalarProperty Name="NomeAtendente" ColumnName="NomeAtendente" />
-                <ScalarProperty Name="TelefoneAtenente" ColumnName="TelefoneAtenente" />
                 <ScalarProperty Name="EmailAtendente" ColumnName="EmailAtendente" />
+                <ScalarProperty Name="TelefoneAtenente" ColumnName="TelefoneAtenente" />
+                <ScalarProperty Name="NomeAtendente" ColumnName="NomeAtendente" />
+                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -173,22 +191,31 @@
                 <ScalarProperty Name="DataEncerramentoChamado" ColumnName="DataEncerramentoChamado" />
                 <ScalarProperty Name="DataCriacaoChamado" ColumnName="DataCriacaoChamado" />
                 <ScalarProperty Name="ObsevacaoChamado" ColumnName="ObsevacaoChamado" />
-                <ScalarProperty Name="IdChamado" ColumnName="IdChamado" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
-                <ScalarProperty Name="TituloChamado" ColumnName="TituloChamado" />
-                <ScalarProperty Name="DescricaoChamado" ColumnName="DescricaoChamado" />
                 <ScalarProperty Name="EstadoChamado" ColumnName="EstadoChamado" />
+                <ScalarProperty Name="DescricaoChamado" ColumnName="DescricaoChamado" />
+                <ScalarProperty Name="TituloChamado" ColumnName="TituloChamado" />
+                <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdChamado" ColumnName="IdChamado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="ChamadoTecnicoModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="NomeCliente" ColumnName="NomeCliente" />
-                <ScalarProperty Name="TelefoneCliente" ColumnName="TelefoneCliente" />
                 <ScalarProperty Name="EmailCliente" ColumnName="EmailCliente" />
+                <ScalarProperty Name="TelefoneCliente" ColumnName="TelefoneCliente" />
+                <ScalarProperty Name="NomeCliente" ColumnName="NomeCliente" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonUser">
+            <EntityTypeMapping TypeName="ChamadoTecnicoModel.PersonUser">
+              <MappingFragment StoreEntitySet="PersonUser">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="IdPersoUser" ColumnName="IdPersoUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

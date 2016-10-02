@@ -43,6 +43,18 @@ namespace SistemaChamadoTecnico.DAL
             }
         }
 
+        public static void CreatePersonUser(string idUser, int idPerson)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                var personUser = new PersonUser();
+                personUser.IdPerson = idPerson;
+                personUser.IdUser = idUser;
+                ent.PersonUser.Add(personUser);
+                ent.SaveChanges();
+            }
+        }
+
         public static void CreateAtendente(Atendente atendente)
         {
             using (var ent = new ChamadoTecnicoEntities())
@@ -126,6 +138,25 @@ namespace SistemaChamadoTecnico.DAL
             {
                 ent.Entry<Cliente>(cliente).State = System.Data.Entity.EntityState.Modified;
                 ent.SaveChanges();
+            }
+        }
+
+        public static void DeletePersonUser(int idCliente, ref string idUser)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                var personUser = SearchPersonUser(idCliente);
+                idUser = personUser.IdUser;
+                ent.Entry<PersonUser>(personUser).State = System.Data.Entity.EntityState.Deleted;
+                ent.SaveChanges();
+            }
+        }
+
+        private static PersonUser SearchPersonUser(int idCliente)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                return ent.PersonUser.FirstOrDefault(x => x.IdPerson == idCliente);
             }
         }
 

@@ -5,11 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="076fdd2801414868aaef02325f301bfc" Name="Diagram1">
-        <EntityTypeShape EntityType="ChamadoTecnicoModel.Atendente" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ChamadoTecnicoModel.Chamado" Width="1.5" PointX="3.5" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ChamadoTecnicoModel.Cliente" Width="1.5" PointX="6.5" PointY="1.625" IsExpanded="true" />
-        <AssociationConnector Association="ChamadoTecnicoModel.FK_Chamado_Atendente" ManuallyRouted="false" />
-        <AssociationConnector Association="ChamadoTecnicoModel.FK_Chamado_Cliente" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ChamadoTecnicoModel.Atendente" Width="1.5" PointX="5.75" PointY="3" />
+        <EntityTypeShape EntityType="ChamadoTecnicoModel.Chamado" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="ChamadoTecnicoModel.Cliente" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="ChamadoTecnicoModel.PersonUser" Width="1.5" PointX="5.75" PointY="0.75" />
+        <AssociationConnector Association="ChamadoTecnicoModel.FK_Chamado_Atendente" />
+        <AssociationConnector Association="ChamadoTecnicoModel.FK_Chamado_Cliente" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

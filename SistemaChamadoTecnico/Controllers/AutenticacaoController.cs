@@ -15,8 +15,8 @@ namespace SistemaChamadoTecnico.Controllers
         public static List<Funcao> lstFuncoes = new List<Funcao>()
         {
             new Funcao(1,Funcao.eFuncao.Admin.ToString()),
-            new Funcao(2,Funcao.eFuncao.Atendente.ToString()),
-            new Funcao(3,Funcao.eFuncao.Cliente.ToString())
+            //new Funcao(2,Funcao.eFuncao.Atendente.ToString()),
+            //new Funcao(3,Funcao.eFuncao.Cliente.ToString())
         };
 
         [HttpGet]
