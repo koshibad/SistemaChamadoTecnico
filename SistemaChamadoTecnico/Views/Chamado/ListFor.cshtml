@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SistemaChamadoTecnico.Models.Chamado>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lista</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TituloChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescricaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ObsevacaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCriacaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.NomeCliente)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TituloChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescricaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObsevacaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.NomeCliente)
+            </td>
+            <td>
+                @Html.ActionLink("Responder", "EditFor", new { id = item.IdChamado })
+            </td>
+        </tr>
+    }
+
+</table>

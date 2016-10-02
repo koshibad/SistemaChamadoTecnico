@@ -163,6 +163,7 @@
     <Compile Include="Models\Cliente.cs">
       <DependentUpon>ChamadoTecnico.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Estado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +189,13 @@
     <Content Include="Views\Cliente\Delete.cshtml" />
     <Content Include="Views\Atendente\Edit.cshtml" />
     <Content Include="Views\Atendente\Delete.cshtml" />
+    <Content Include="Views\Chamado\Create.cshtml" />
+    <Content Include="Views\Chamado\List.cshtml" />
+    <Content Include="Views\Chamado\ListFor.cshtml" />
+    <Content Include="Views\Chamado\EditFor.cshtml" />
+    <Content Include="Views\Chamado\Delete.cshtml" />
+    <Content Include="Views\Chamado\EditReopen.cshtml" />
+    <Content Include="Views\Chamado\EditToClose.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -197,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Chamado\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

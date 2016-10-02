@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SistemaChamadoTecnico.Models.Chamado>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lista</h2>
+
+<p>
+    @Html.ActionLink("Cadastrar Chamado", "Create")
+
+    <br />
+    <br />
+
+    @using (Html.BeginForm("List", "Chamado", FormMethod.Get))
+    {
+        @Html.Label("Estado do chamado:")
+        @Html.DropDownList("estado", (SelectList)@ViewBag.TodosEstados, "Todos")
+        <input type="submit" value="Listar Chamados" class="btn btn-default" />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TituloChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescricaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ObsevacaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCriacaoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataEncerramentoChamado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Atendente.NomeAtendente)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TituloChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescricaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObsevacaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacaoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEncerramentoChamado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Atendente.NomeAtendente)
+            </td>
+            <td>
+                @Html.ActionLink("Reabrir", "EditReopen", new { id = item.IdChamado }) |
+                @Html.ActionLink("Finalizar", "EditToClose", new { id = item.IdChamado }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.IdChamado })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -25,6 +25,24 @@ namespace SistemaChamadoTecnico.DAL
             }
         }
 
+        public static void CreateChamado(Chamado chamado)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Chamado.Add(chamado);
+                ent.SaveChanges();
+            }
+        }
+
+        public static List<Chamado> ListChamado(string estadoChamado = "")
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                return ent.Chamado.Where(x => string.IsNullOrEmpty(estadoChamado)
+                    || x.EstadoChamado.Equals(estadoChamado)).ToList<Chamado>();
+            }
+        }
+
         public static void CreateAtendente(Atendente atendente)
         {
             using (var ent = new ChamadoTecnicoEntities())
@@ -56,6 +74,32 @@ namespace SistemaChamadoTecnico.DAL
             {
                 ent.Entry<Atendente>(atendente).State = System.Data.Entity.EntityState.Modified;
                 ent.SaveChanges();
+            }
+        }
+
+        public static void DeleteChamado(Chamado chamado)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Entry<Chamado>(chamado).State = System.Data.Entity.EntityState.Deleted;
+                ent.SaveChanges();
+            }
+        }
+
+        public static void AlterChamado(Chamado chamado)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                ent.Entry<Chamado>(chamado).State = System.Data.Entity.EntityState.Modified;
+                ent.SaveChanges();
+            }
+        }
+
+        public static Chamado SearchChamado(int id)
+        {
+            using (var ent = new ChamadoTecnicoEntities())
+            {
+                return ent.Chamado.FirstOrDefault(x => x.IdChamado == id);
             }
         }
 
