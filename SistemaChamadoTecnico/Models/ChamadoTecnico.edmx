@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ChamadoTecnicoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ChamadoTecnicoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Atendente">
           <Key>
             <PropertyRef Name="IdAtendente" />
@@ -24,6 +24,9 @@
           <Property Name="TituloChamado" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="DescricaoChamado" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="EstadoChamado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ObsevacaoChamado" Type="varchar" MaxLength="800" />
+          <Property Name="DataCriacaoChamado" Type="date" />
+          <Property Name="DataEncerramentoChamado" Type="date" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -71,8 +74,7 @@
             <End Role="Chamado" EntitySet="Chamado" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ChamadoTecnicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -98,6 +100,9 @@
           <Property Name="EstadoChamado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Atendente" Relationship="Self.FK_Chamado_Atendente" FromRole="Chamado" ToRole="Atendente" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Chamado_Cliente" FromRole="Chamado" ToRole="Cliente" />
+          <Property Name="ObsevacaoChamado" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+          <Property Name="DataCriacaoChamado" Type="DateTime" Precision="0" />
+          <Property Name="DataEncerramentoChamado" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -165,6 +170,9 @@
           <EntitySetMapping Name="Chamado">
             <EntityTypeMapping TypeName="ChamadoTecnicoModel.Chamado">
               <MappingFragment StoreEntitySet="Chamado">
+                <ScalarProperty Name="DataEncerramentoChamado" ColumnName="DataEncerramentoChamado" />
+                <ScalarProperty Name="DataCriacaoChamado" ColumnName="DataCriacaoChamado" />
+                <ScalarProperty Name="ObsevacaoChamado" ColumnName="ObsevacaoChamado" />
                 <ScalarProperty Name="IdChamado" ColumnName="IdChamado" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="IdAtendente" ColumnName="IdAtendente" />

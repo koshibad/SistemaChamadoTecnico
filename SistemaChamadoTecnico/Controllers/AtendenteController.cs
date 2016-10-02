@@ -31,5 +31,46 @@ namespace SistemaChamadoTecnico.Controllers
         {
             return View(ChamadoTecnicoDb.ListAtendente());
         }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index", "Home");
+
+            return View(ChamadoTecnicoDb.SearchAtendente((int)id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int? id, Atendente atendente)
+        {
+            if (ModelState.IsValid)
+            {
+                ChamadoTecnicoDb.AlterAtendente(atendente);
+                return RedirectToAction("List");
+            }
+
+            return View(ChamadoTecnicoDb.SearchAtendente((int)id));
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index", "Home");
+
+            return View(ChamadoTecnicoDb.SearchAtendente((int)id));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int? id, Atendente atendente)
+        {
+            if (id == null)
+                return RedirectToAction("Index", "Home");
+
+            atendente.IdAtendente = (int)id;
+            ChamadoTecnicoDb.DeleteAtendente(atendente);
+            return RedirectToAction("List");
+        }
     }
 }

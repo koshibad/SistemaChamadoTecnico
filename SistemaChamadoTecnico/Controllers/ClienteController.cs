@@ -47,7 +47,7 @@ namespace SistemaChamadoTecnico.Controllers
             if (ModelState.IsValid)
             {
                 ChamadoTecnicoDb.AlterCliente(cliente);
-                return RedirectToAction("Listar");
+                return RedirectToAction("List");
             }
 
             return View(ChamadoTecnicoDb.SearchCliente((int)id));
@@ -70,7 +70,7 @@ namespace SistemaChamadoTecnico.Controllers
 
             cliente.IdCliente = (int)id;
             ChamadoTecnicoDb.DeleteCliente(cliente);
-            return RedirectToAction("Listar");
+            return RedirectToAction("List");
         }
     }
 }

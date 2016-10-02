@@ -20,6 +20,9 @@ namespace SistemaChamadoTecnico.Models
         public string TituloChamado { get; set; }
         public string DescricaoChamado { get; set; }
         public string EstadoChamado { get; set; }
+        public string ObsevacaoChamado { get; set; }
+        public Nullable<System.DateTime> DataCriacaoChamado { get; set; }
+        public Nullable<System.DateTime> DataEncerramentoChamado { get; set; }
     
         public virtual Atendente Atendente { get; set; }
         public virtual Cliente Cliente { get; set; }

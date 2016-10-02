@@ -186,6 +186,8 @@
     <Content Include="Views\Atendente\List.cshtml" />
     <Content Include="Views\Cliente\Edit.cshtml" />
     <Content Include="Views\Cliente\Delete.cshtml" />
+    <Content Include="Views\Atendente\Edit.cshtml" />
+    <Content Include="Views\Atendente\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
