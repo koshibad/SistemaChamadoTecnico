@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SistemaChamadoTecnico.Controllers
 {
+    [Authorize]
     public class ClienteController : Controller
     {
         [HttpGet]

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SistemaChamadoTecnico.Controllers
 {
+    [Authorize]
     public class ChamadoController : Controller
     {
         public static List<Estado> lstEstados = new List<Estado>()

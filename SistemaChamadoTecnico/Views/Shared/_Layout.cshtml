@@ -20,8 +20,8 @@
                 @Html.ActionLink("Chamado Técnico FIAP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
+                @{ Html.RenderPartial("_UsuarioPV");}
             </div>
         </div>
     </div>
