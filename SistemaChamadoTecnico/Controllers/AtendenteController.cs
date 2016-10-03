@@ -1,4 +1,6 @@
-﻿using SistemaChamadoTecnico.DAL;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using SistemaChamadoTecnico.DAL;
 using SistemaChamadoTecnico.Models;
 using System;
 using System.Collections.Generic;
@@ -23,8 +25,70 @@ namespace SistemaChamadoTecnico.Controllers
             if (!ModelState.IsValid)
                 return View();
 
+            string idUser = "";
+            if (!CreateUser(atendente.SenhaUsuario, atendente.ConfirmaUsuario, atendente.NomeUsuario, ref idUser))
+                return View();
+
             ChamadoTecnicoDb.CreateAtendente(atendente);
+            ChamadoTecnicoDb.CreatePersonUser(idUser, atendente.IdAtendente);
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool CreateUser(string Senha, string Confirma, string Nome, ref string idUser)
+        {
+            if (!ModelState.IsValid)
+                return false;
+
+            if (!Senha.Equals(Confirma))
+            {
+                ViewBag.Erro = "A senha e sua confimação não coincidem !";
+                return false;
+            }
+
+            string funcao = Funcao.eFuncao.Atendente.ToString();
+            var roleStore = new RoleStore<IdentityRole>();
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //criando Role
+            var role = roleManager.FindByName(funcao);
+            if (role == null)
+            {
+                role = new IdentityRole(funcao);
+                var roleresult = roleManager.Create(role);
+                if (!roleresult.Succeeded)
+                {
+                    ViewBag.Erro = roleresult.Errors.FirstOrDefault();
+                    return false;
+                }
+            }
+
+            var usuarioStore = new UserStore<IdentityUser>();
+            var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+
+            //Cria uma identidade
+            var usuarioInfo = new IdentityUser()
+            {
+                UserName = Nome
+            };
+
+            //Cria o usuário
+            IdentityResult resultado = usuarioManager.Create(usuarioInfo, Senha);
+
+            //se o usuário foi criado, o autentica
+            if (resultado.Succeeded)
+            {
+                //Atribuindo Role ao User
+                var rolesForUser = usuarioManager.GetRoles(usuarioInfo.Id);
+                if (!rolesForUser.Contains(role.Name))
+                    usuarioManager.AddToRole(usuarioInfo.Id, role.Name);
+
+                idUser = usuarioInfo.Id;
+                return true;
+            }
+            else
+            {
+                ViewBag.Erro = resultado.Errors.FirstOrDefault();
+                return false;
+            }
         }
 
         [HttpGet]
@@ -69,9 +133,24 @@ namespace SistemaChamadoTecnico.Controllers
             if (id == null)
                 return RedirectToAction("Index", "Home");
 
+            string IdUser = "";
             atendente.IdAtendente = (int)id;
+            ChamadoTecnicoDb.DeletePersonUser(atendente.IdAtendente, ref IdUser);
+            DeleteUser(IdUser);
             ChamadoTecnicoDb.DeleteAtendente(atendente);
             return RedirectToAction("List");
+        }
+
+        private void DeleteUser(string idUser)
+        {
+            var usuarioStore = new UserStore<IdentityUser>();
+            var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+
+            var rolesForUser = usuarioManager.GetRoles(idUser);
+            if (rolesForUser.Contains(Funcao.eFuncao.Atendente.ToString()))
+                usuarioManager.RemoveFromRole(idUser, Funcao.eFuncao.Atendente.ToString());
+
+            IdentityResult resultado = usuarioManager.Delete(usuarioManager.FindById(idUser));
         }
     }
 }

@@ -17,6 +17,8 @@
         @Html.HiddenFor(model => model.IdChamado)
         @Html.HiddenFor(model => model.DataCriacaoChamado)
         @Html.HiddenFor(model => model.ObsevacaoChamado)
+        @Html.HiddenFor(model => model.IdAtendente)
+        @Html.HiddenFor(model => model.IdCliente)
 
         <div class="form-group">
             @Html.LabelFor(model => model.TituloChamado, htmlAttributes: new { @class = "control-label col-md-2" })

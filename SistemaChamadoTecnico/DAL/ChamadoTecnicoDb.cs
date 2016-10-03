@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SistemaChamadoTecnico.Models;
+using System.Data.Entity;
 
 namespace SistemaChamadoTecnico.DAL
 {
@@ -38,8 +39,9 @@ namespace SistemaChamadoTecnico.DAL
         {
             using (var ent = new ChamadoTecnicoEntities())
             {
-                return ent.Chamado.Where(x => string.IsNullOrEmpty(estadoChamado)
-                    || x.EstadoChamado.Equals(estadoChamado)).ToList<Chamado>();
+                return ent.Chamado.Include(x => x.Atendente).Include(x => x.Cliente)
+                    .Where(x => string.IsNullOrEmpty(estadoChamado) ||
+                    x.EstadoChamado.Equals(estadoChamado)).ToList<Chamado>();
             }
         }
 
@@ -111,7 +113,8 @@ namespace SistemaChamadoTecnico.DAL
         {
             using (var ent = new ChamadoTecnicoEntities())
             {
-                return ent.Chamado.FirstOrDefault(x => x.IdChamado == id);
+                return ent.Chamado.Include(x => x.Cliente).Include(x => x.Atendente)
+                    .FirstOrDefault(x => x.IdChamado == id);
             }
         }
 
@@ -152,11 +155,14 @@ namespace SistemaChamadoTecnico.DAL
             }
         }
 
-        private static PersonUser SearchPersonUser(int idCliente)
+        public static PersonUser SearchPersonUser(int idCliente, string idUser = "")
         {
             using (var ent = new ChamadoTecnicoEntities())
             {
-                return ent.PersonUser.FirstOrDefault(x => x.IdPerson == idCliente);
+                if (string.IsNullOrEmpty(idUser))
+                    return ent.PersonUser.FirstOrDefault(x => x.IdPerson == idCliente);
+
+                return ent.PersonUser.FirstOrDefault(x => x.IdUser == idUser);
             }
         }
 

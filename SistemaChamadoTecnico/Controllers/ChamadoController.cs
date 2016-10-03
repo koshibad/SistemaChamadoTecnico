@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace SistemaChamadoTecnico.Controllers
 {
@@ -34,6 +35,7 @@ namespace SistemaChamadoTecnico.Controllers
 
             chamado.DataCriacaoChamado = DateTime.Now;
             chamado.EstadoChamado = Estado.eEstado.Aguardando.ToString();
+            chamado.IdCliente = ChamadoTecnicoDb.SearchPersonUser(0, User.Identity.GetUserId()).IdPerson;
             ChamadoTecnicoDb.CreateChamado(chamado);
             return RedirectToAction("Index", "Home");
         }
@@ -43,7 +45,9 @@ namespace SistemaChamadoTecnico.Controllers
         public ActionResult List(string estado)
         {
             ViewBag.TodosEstados = new SelectList(lstEstados, "NomeEstado", "NomeEstado");
-            return View(ChamadoTecnicoDb.ListChamado(estado));
+            var IdCliente = ChamadoTecnicoDb.SearchPersonUser(0, User.Identity.GetUserId()).IdPerson;
+            return View(ChamadoTecnicoDb.ListChamado(estado).
+                Where(x => x.IdCliente == IdCliente).ToList<Chamado>());
         }
 
         [HttpGet]
@@ -142,6 +146,7 @@ namespace SistemaChamadoTecnico.Controllers
             if (ModelState.IsValid)
             {
                 chamado.EstadoChamado = Estado.eEstado.Pendente.ToString();
+                chamado.IdAtendente = ChamadoTecnicoDb.SearchPersonUser(0, User.Identity.GetUserId()).IdPerson;
                 ChamadoTecnicoDb.AlterChamado(chamado);
                 return RedirectToAction("ListFor");
             }
