@@ -41,7 +41,13 @@ namespace SistemaChamadoTecnico.Controllers
             if (!ModelState.IsValid)
                 return false;
 
-            if (!Senha.Equals(Confirma))
+            if (Nome == null)
+            {
+                ViewBag.Erro = "O usuário é obirgatório !";
+                return false;
+            }
+
+            if (Senha == null || Confirma == null || !Senha.Equals(Confirma))
             {
                 ViewBag.Erro = "A senha e sua confimação não coincidem !";
                 return false;

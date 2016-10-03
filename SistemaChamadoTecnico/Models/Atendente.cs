@@ -28,6 +28,7 @@ namespace SistemaChamadoTecnico.Models
         public string NomeAtendente { get; set; }
 
         [DisplayName("Telefone")]
+        [StringLength(11, ErrorMessage = "Quantidade máxima de 11 números !")]
         public string TelefoneAtenente { get; set; }
 
         [DisplayName("Email")]

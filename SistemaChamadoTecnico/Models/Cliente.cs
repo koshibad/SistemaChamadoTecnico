@@ -28,6 +28,7 @@ namespace SistemaChamadoTecnico.Models
         public string NomeCliente { get; set; }
 
         [DisplayName("Telefone")]
+        [StringLength(11, ErrorMessage = "Quantidade máxima de 11 números !")]
         public string TelefoneCliente { get; set; }
 
         [DisplayName("Email")]
@@ -39,6 +40,7 @@ namespace SistemaChamadoTecnico.Models
 
         [DataType(DataType.Password)]
         [DisplayName("Senha")]
+        //[Required(ErrorMessage = "A senha é obrigatória !")]
         public string SenhaUsuario { get; set; }
 
         [DataType(DataType.Password)]
@@ -46,6 +48,7 @@ namespace SistemaChamadoTecnico.Models
         public string ConfirmaUsuario { get; set; }
 
         [DisplayName("Usuário")]
+        //[Required(ErrorMessage = "O usuário é obrigatório !")]
         public string NomeUsuario { get; set; }
     }
 }
