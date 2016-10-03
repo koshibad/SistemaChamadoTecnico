@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using SistemaChamadoTecnico.DAL;
 using SistemaChamadoTecnico.Models;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,45 @@ namespace SistemaChamadoTecnico.Controllers
         };
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Edit()
         {
-            return View();
+            var usuarioStore = new UserStore<IdentityUser>();
+            var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+            var identityUser = usuarioManager.FindById(User.Identity.GetUserId());
+
+            return View(new Usuario() { Nome = identityUser.UserName, Id = identityUser.Id });
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Usuario usuario)
+        {
+            if (!usuario.Senha.Equals(usuario.Confirma))
+            {
+                ViewBag.Erro = "A senha e sua confimação não coincidem !";
+                return View(usuario);
+            }
+
+            var usuarioStore = new UserStore<IdentityUser>();
+            var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+            var identityUser = usuarioManager.FindById(User.Identity.GetUserId());
+            bool trocouNome = !identityUser.Equals(usuario.Nome);
+            if (trocouNome)
+            {
+                identityUser.UserName = usuario.Nome;
+                usuarioManager.Update(identityUser);
+            }
+
+            usuarioManager.ChangePassword(identityUser.Id, usuario.SenhaAntiga, usuario.Senha);
+
+            if (trocouNome)
+            {
+                var autManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
+                var identidadeUsuario = usuarioManager.CreateIdentity(identityUser,
+                    DefaultAuthenticationTypes.ApplicationCookie);
+                autManager.SignIn(new AuthenticationProperties() { }, identidadeUsuario);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

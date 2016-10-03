@@ -11,20 +11,28 @@ namespace SistemaChamadoTecnico.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
     public partial class Chamado
     {
         public int IdChamado { get; set; }
         public Nullable<int> IdCliente { get; set; }
+
         public Nullable<int> IdAtendente { get; set; }
+
         public string TituloChamado { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string DescricaoChamado { get; set; }
+
         public string EstadoChamado { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string ObsevacaoChamado { get; set; }
+
         public Nullable<System.DateTime> DataCriacaoChamado { get; set; }
 
         public Nullable<System.DateTime> DataEncerramentoChamado { get; set; }
-
+    
         public virtual Atendente Atendente { get; set; }
         public virtual Cliente Cliente { get; set; }
     }

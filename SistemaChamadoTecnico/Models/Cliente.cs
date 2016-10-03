@@ -11,7 +11,8 @@ namespace SistemaChamadoTecnico.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +22,24 @@ namespace SistemaChamadoTecnico.Models
         }
 
         public int IdCliente { get; set; }
+
+        [Required(ErrorMessage = "O Nome é obrigatório !")]
         public string NomeCliente { get; set; }
         public string TelefoneCliente { get; set; }
         public string EmailCliente { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chamado> Chamado { get; set; }
+
+        [DataType(DataType.Password)]
+        [DisplayName("Senha")]
         public string SenhaUsuario { get; set; }
-        public string NomeUsuario { get; set; }
+
+        [DataType(DataType.Password)]
+        [DisplayName("Confimação")]
         public string ConfirmaUsuario { get; set; }
+
+        [DisplayName("Usuário")]
+        public string NomeUsuario { get; set; }
     }
 }

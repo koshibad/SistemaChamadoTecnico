@@ -57,6 +57,10 @@ namespace SistemaChamadoTecnico.Controllers
             if (id == null)
                 return RedirectToAction("Index", "Home");
 
+            var chamado = ChamadoTecnicoDb.SearchChamado((int)id);
+            if (!chamado.EstadoChamado.Equals(Estado.eEstado.Pendente.ToString()))
+                return RedirectToAction("List");
+
             return View(ChamadoTecnicoDb.SearchChamado((int)id));
         }
 
@@ -83,6 +87,10 @@ namespace SistemaChamadoTecnico.Controllers
             if (id == null)
                 return RedirectToAction("Index", "Home");
 
+            var chamado = ChamadoTecnicoDb.SearchChamado((int)id);
+            if (!chamado.EstadoChamado.Equals(Estado.eEstado.Pendente.ToString()))
+                return RedirectToAction("List");
+
             return View(ChamadoTecnicoDb.SearchChamado((int)id));
         }
 
@@ -106,6 +114,10 @@ namespace SistemaChamadoTecnico.Controllers
         {
             if (id == null)
                 return RedirectToAction("Index", "Home");
+
+            var chamado = ChamadoTecnicoDb.SearchChamado((int)id);
+            if (!chamado.EstadoChamado.Equals(Estado.eEstado.Aguardando.ToString()))
+                return RedirectToAction("List");
 
             return View(ChamadoTecnicoDb.SearchChamado((int)id));
         }

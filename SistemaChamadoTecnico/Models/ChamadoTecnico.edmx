@@ -25,8 +25,8 @@
           <Property Name="DescricaoChamado" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="EstadoChamado" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ObsevacaoChamado" Type="varchar" MaxLength="800" />
-          <Property Name="DataCriacaoChamado" Type="date" />
-          <Property Name="DataEncerramentoChamado" Type="date" />
+          <Property Name="DataCriacaoChamado" Type="datetime2" Precision="7" />
+          <Property Name="DataEncerramentoChamado" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -122,8 +122,8 @@
           <Property Name="DescricaoChamado" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="EstadoChamado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ObsevacaoChamado" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
-          <Property Name="DataCriacaoChamado" Type="DateTime" Precision="0" />
-          <Property Name="DataEncerramentoChamado" Type="DateTime" Precision="0" />
+          <Property Name="DataCriacaoChamado" Type="DateTime" Precision="7" />
+          <Property Name="DataEncerramentoChamado" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Atendente" Relationship="ChamadoTecnicoModel.FK_Chamado_Atendente" FromRole="Chamado" ToRole="Atendente" />
           <NavigationProperty Name="Cliente" Relationship="ChamadoTecnicoModel.FK_Chamado_Cliente" FromRole="Chamado" ToRole="Cliente" />
         </EntityType>

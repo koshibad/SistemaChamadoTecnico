@@ -70,9 +70,16 @@
                 @Html.DisplayFor(modelItem => item.Atendente.NomeAtendente)
             </td>
             <td>
-                @Html.ActionLink("Reabrir", "EditReopen", new { id = item.IdChamado }) |
-                @Html.ActionLink("Finalizar", "EditToClose", new { id = item.IdChamado }) |
-                @Html.ActionLink("Excluir", "Delete", new { id = item.IdChamado })
+                @if (item.EstadoChamado.Equals("Pendente"))
+                {
+                    @Html.ActionLink("Reabrir", "EditReopen", new { id = item.IdChamado })
+                    @:|
+                    @Html.ActionLink("Finalizar", "EditToClose", new { id = item.IdChamado })
+                }
+                @if (item.EstadoChamado.Equals("Aguardando"))
+                {
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.IdChamado })
+                }
             </td>
         </tr>
     }

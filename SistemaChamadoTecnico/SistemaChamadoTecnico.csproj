@@ -246,6 +246,7 @@
     <Content Include="Views\Shared\_UsuarioPV.cshtml" />
     <Content Include="Views\Autenticacao\Login.cshtml" />
     <Content Include="Views\Autenticacao\Create.cshtml" />
+    <Content Include="Views\Autenticacao\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
