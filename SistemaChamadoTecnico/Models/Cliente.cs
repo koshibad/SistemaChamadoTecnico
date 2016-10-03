@@ -24,8 +24,14 @@ namespace SistemaChamadoTecnico.Models
         public int IdCliente { get; set; }
 
         [Required(ErrorMessage = "O Nome é obrigatório !")]
+        [DisplayName("Nome")]
         public string NomeCliente { get; set; }
+
+        [DisplayName("Telefone")]
         public string TelefoneCliente { get; set; }
+
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
         public string EmailCliente { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

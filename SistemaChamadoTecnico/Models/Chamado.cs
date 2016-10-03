@@ -11,6 +11,7 @@ namespace SistemaChamadoTecnico.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     public partial class Chamado
     {
@@ -19,20 +20,28 @@ namespace SistemaChamadoTecnico.Models
 
         public Nullable<int> IdAtendente { get; set; }
 
+        [DisplayName("Título")]
+        [Required(ErrorMessage = "O Título é obrigatório !")]
         public string TituloChamado { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [DisplayName("Descrição")]
+        [Required(ErrorMessage = "A descrição é obrigatória !")]
         public string DescricaoChamado { get; set; }
 
+        [DisplayName("Estado")]
         public string EstadoChamado { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [DisplayName("Observação")]
         public string ObsevacaoChamado { get; set; }
 
+        [DisplayName("Data de Criação")]
         public Nullable<System.DateTime> DataCriacaoChamado { get; set; }
 
+        [DisplayName("Data de Encerramento")]
         public Nullable<System.DateTime> DataEncerramentoChamado { get; set; }
-    
+
         public virtual Atendente Atendente { get; set; }
         public virtual Cliente Cliente { get; set; }
     }
